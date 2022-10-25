@@ -1,13 +1,39 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+	import { enhance } from '$app/forms';
 
 	export let data: PageData;
 	$: ({ tutorials } = data);
 
-	data.tutorials.forEach((item:any) => {
-		console.log('>>>> ' + item.title)
-	});
+	function defaultButtonState(tutorial: any) {
+		if (tutorial.state == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
+	function processButtonState(tutorial: any) {
+		if (tutorial.state == 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	function successButtonState(tutorial: any) {
+		if (tutorial.state == 2) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	async function editState(index: number) {
+		let tutorial = tutorials[index];
+		tutorial.state = tutorial.state > 1 ? 0 : tutorial.state + 1;
+		tutorials[index] = tutorial;
+	}
 </script>
 
 <svelte:head>
@@ -17,7 +43,16 @@
 
 <section>
 	<div class="wrapper">
-		{#each tutorials as tutorial}
+		{#each tutorials as tutorial, index}
+			<form
+				method="POST"
+				action="?/editUser"
+				use:enhance={() => {
+					return async () => {
+						editState(index);
+					};
+				}}
+			>
 				<input hidden name="id" type="text" value={tutorial._id} />
 				<input hidden name="title" type="text" value={tutorial.title} />
 				<input hidden name="state" type="number" value={tutorial.state} />
@@ -36,6 +71,7 @@
 						<div class="button__text button__text--success">{tutorial.title}</div>
 					</div>
 				</button>
+			</form>
 		{/each}
 	</div>
 </section>

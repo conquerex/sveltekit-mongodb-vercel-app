@@ -1,5 +1,6 @@
 import { tutorials } from '$db/tutorials';
-import type { PageServerLoad } from './$types';
+import type { Actions, PageServerLoad } from './$types';
+import { ObjectId } from 'mongodb';
 
 export const load: PageServerLoad = async function () {
 	console.log('>>>> start');
@@ -29,4 +30,28 @@ export const load: PageServerLoad = async function () {
 	return {
 		tutorials: loadData
 	};
+};
+
+export const actions: Actions = {
+	editUser: async ({ request }: any) => {
+		console.log('>>>> editUser start');
+		const values = await request.formData();
+		
+		const state = Number.parseInt(values.get('state'));
+		const newState = state > 1 ? 0 : (state + 1)
+		
+		const _id: string = values.get('id');
+		const objectId = new ObjectId(_id);
+		
+		await tutorials.updateOne(
+			{ _id: objectId },
+			{
+				$set: {
+					state: newState
+				}
+			}
+		);
+
+		return { success: true };
+	}
 };

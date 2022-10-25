@@ -133,7 +133,6 @@ button:focus:not(:focus-visible) {
 	transform: rotate(45deg);
 }
 .button--process {
-	pointer-events: none;
 	background-color: MEDIUMSLATEBLUE;
 }
 .button--process .button__text--process {
@@ -154,7 +153,6 @@ button:focus:not(:focus-visible) {
 	-webkit-clip-path: polygon(100% 0, 50% 50%, 100% 100%);
 }
 .button--success {
-	pointer-events: none;
 	background-color: DARKTURQUOISE;
 }
 .button--success .button__text--success {
