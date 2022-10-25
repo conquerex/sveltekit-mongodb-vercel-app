@@ -18,7 +18,6 @@ export const load: PageServerLoad = async function () {
 
 	
 	data.forEach((item) => {
-		console.log('>>>> title : ' + item.title);
 		if (item.title.length > 14) {
 			item.length = item.title.length * 0.7
 		} else {

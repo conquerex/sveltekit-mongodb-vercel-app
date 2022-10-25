@@ -18,7 +18,11 @@
 }
 
 body {
-	background-color: rgb(255, 255, 255);
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	flex-wrap: wrap;
+	background-color: rgb(0, 48, 49);
 }
 
 h1,
@@ -87,16 +91,17 @@ button:focus:not(:focus-visible) {
 
 .wrapper {
 	display: flex;
-	width: 100vw;
-	height: 100vh;
 	align-items: center;
 	justify-content: center;
+	flex-direction: row;
+	flex-wrap: wrap;
 }
 
 .button {
 	font-size: 1.2em;
 	text-align: left;
 	padding: 0.8em 1.4em;
+	margin: 0.4em 0.4em;
 	border-radius: 2em;
 	cursor: pointer;
 	font-family: 'Montserrat', sans-serif;

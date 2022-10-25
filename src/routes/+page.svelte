@@ -1,21 +1,13 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import type { PageData } from './$types';
 
-	onMount(() => {
-		const button:any = document.querySelector('.button');
-		button.addEventListener('click', function () {
-			button.classList.remove('button--default');
-			button.classList.add('button--process');
-			setTimeout(function () {
-				button.classList.remove('button--process');
-				button.classList.add('button--success');
-			}, 2000);
-			setTimeout(function () {
-				button.classList.remove('button--success');
-				button.classList.add('button--default');
-			}, 4500);
-		});
+	export let data: PageData;
+	$: ({ tutorials } = data);
+
+	data.tutorials.forEach((item:any) => {
+		console.log('>>>> ' + item.title)
 	});
+
 </script>
 
 <svelte:head>
@@ -25,16 +17,26 @@
 
 <section>
 	<div class="wrapper">
-		<button class="button button--default">
-			<div class="button__icon-wrapper">
-				<div class="button__icon" />
-			</div>
-			<div class="button__text-wrapper">
-				<div class="button__text button__text--default">Send</div>
-				<div class="button__text button__text--process">Cancel</div>
-				<div class="button__text button__text--success">Sent!</div>
-			</div>
-		</button>
+		{#each tutorials as tutorial}
+				<input hidden name="id" type="text" value={tutorial._id} />
+				<input hidden name="title" type="text" value={tutorial.title} />
+				<input hidden name="state" type="number" value={tutorial.state} />
+				<button
+					class="button +
+					 {tutorial.state == 0 ? 'button--default' : ''} +
+					  {tutorial.state == 1 ? 'button--process' : ''} +
+					   {tutorial.state == 2 ? 'button--success' : ''} "
+				>
+					<div class="button__icon-wrapper">
+						<div class="button__icon" />
+					</div>
+					<div class="button__text-wrapper" style="width: {tutorial.length}em">
+						<div class="button__text button__text--default">{tutorial.title}</div>
+						<div class="button__text button__text--process">{tutorial.title}</div>
+						<div class="button__text button__text--success">{tutorial.title}</div>
+					</div>
+				</button>
+		{/each}
 	</div>
 </section>
 
