@@ -1,7 +1,21 @@
-<script>
-	import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
+<script lang="ts">
+	import { onMount } from 'svelte';
+
+	onMount(() => {
+		const button:any = document.querySelector('.button');
+		button.addEventListener('click', function () {
+			button.classList.remove('button--default');
+			button.classList.add('button--process');
+			setTimeout(function () {
+				button.classList.remove('button--process');
+				button.classList.add('button--success');
+			}, 2000);
+			setTimeout(function () {
+				button.classList.remove('button--success');
+				button.classList.add('button--default');
+			}, 4500);
+		});
+	});
 </script>
 
 <svelte:head>
@@ -10,7 +24,18 @@
 </svelte:head>
 
 <section>
-	
+	<div class="wrapper">
+		<button class="button button--default">
+			<div class="button__icon-wrapper">
+				<div class="button__icon" />
+			</div>
+			<div class="button__text-wrapper">
+				<div class="button__text button__text--default">Send</div>
+				<div class="button__text button__text--process">Cancel</div>
+				<div class="button__text button__text--success">Sent!</div>
+			</div>
+		</button>
+	</div>
 </section>
 
 <style>
